@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Build a website with blogdown in R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Tatjana Kecojevic" />
+    <meta name="date" content="2020-06-08" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/my-theme.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/my-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="columns.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+layout: true
+
+&lt;a class="footer-link" href="https://sisteranalyst.org"&gt;sisteranalyst.org&lt;/a&gt;
+
+---
+
+class: title-slide, center, bottom
+
+# Build a website with blogdown in R
+
+## ... and HUGO and GitHub in RStudio 
+
+### Tatjana Kecojevic &amp;#183; Tijana Blagojev &amp;#183; Katarina Kosmina
+
+---
+class: inverse, middle
+
+Hi, Welcome to the **&lt;span style="color:#00B2EE"&gt;'Build a website with blogdown in R'&lt;/span&gt;** workshop.
+
+I'm Tanja!! A Data Scientist with a doctorate in Statistics from [the University of Manchester](https://www.manchester.ac.uk/). I have spent many years working in the U.K. university sector as a senior lecturer. I am the founder of [Sister Analyst](https://sisteranalyst.org), an organisation aiming to empower women from a diverse range of backgrounds through the development and advancment of data skills. [Sister Analyst's website](https://sisteranalyst.org) is just one of the websites I have built using [blogdown](https://cran.r-project.org/web/packages/blogdown/index.html) in [RStudio](https://rstudio.cloud/). 
+ 
+The goal of our workshop is to work through the material and to learn how to use [blogdown](https://cran.r-project.org/web/packages/blogdown/index.html) package to make a website.
+
+---
+class: freight-slide, center, middle, inverse
+
+.pull-left[
+### Tatjana Kecojevic 
+
+&lt;img style="border-radius: 50%;" src="images/team/Tatjana_Kecojevic.jpg" width="220px"/&gt;
+
+[<i class="fab  fa-github "></i> @TanjaKec](https://github.com/tanjakec)  
+[<i class="fab  fa-twitter "></i> @Tatjana_Kec](https://twitter.com/tatjana_kec)
+
+]
+
+.pull-right[
+### a few self-knitted websites 
+
+[BeoPlace.space](https://beoplace.space/)
+
+[SisterAnalyst.org](https://sisteranalyst.org/)
+
+[Covid-19 SR](https://covid19sr.rbind.io/)
+
+[WiDS Subotica 2020](https://suwids2.netlify.app/)
+
+[Data Literacy](https://dataliteracy.netlify.app/)
+
+[Klik-R](http://klikr.rbind.io/)
+
+[WiDS Subotica 2019](https://widssubotica.netlify.app/)
+
+]
+
+---
+class: freight-slide, center, middle, inverse
+
+# .emphasis[we are a team]
+
+.pull-left[
+### Tijana Blagojev 
+
+&lt;img style="border-radius: 50%;" src="images/team/Tijana_Blagojev.jpeg" width="225px"/&gt;
+
+[<i class="fab  fa-github "></i> @tikiblagojev](https://github.com/tikiblagojev)  
+[<i class="fab  fa-twitter "></i> @tikiblagojev](https://twitter.com/tikiblagojev)
+
+]
+
+
+.pull-right[
+### Katarina Kosmina  
+
+&lt;img style="border-radius: 50%;" src="images/team/Katarina_Kosmina.jpg" width="250px"/&gt;
+
+[<i class="fab  fa-github "></i> @KosmiKatarina](https://github.com/KosmiKatarina)  
+[<i class="fab  fa-twitter "></i> @KosmiKatarina](https://twitter.com/KosmiKatarina)
+
+]
+
+---
+class: freight-slide, center, middle, inverse
+
+# .emphasis[we are part of R-Ladies Belgrade]
+
+&lt;img style = "border: 75%;" src="images/team/rladies-r-logo.png" width="225px"/&gt;
+
+[<i class="fab  fa-github "></i> @RLadiesBelgrade](https://github.com/RLadiesBelgrade)  
+
+[<i class="fab  fa-twitter "></i> @RLadiesBelgrade](https://twitter.com/RLadiesBelgrade)
+
+[<i class="fab  fa-meetup "></i> @rladies-belgrade](https://www.meetup.com/rladies-belgrade/)
+
+---
+class: inverse, middle
+.emphasis[Go to &lt;https://github.com/TatjanaKec/eRum2020_WS&gt; to download the material.]
+
+&lt;img src="images/materijal/GitHub_link1.png" width="550px" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="images/materijal/GitHub_link2.png" width="550px" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, center, middle
+
+# .emphasis[Get Started] 🤫😴
+
+&lt;img 
+src=https://media.giphy.com/media/mMSE6MfkXzLLa/giphy.gif align="middle" img width="60%" /&gt;
+
+---
+
+class: center, middle
+
+#### `blogdown` &lt;- a package based on R Markdown and Hugo
+
+&lt;img src="images/rmd_hugo_blogdown.png" width="600px" /&gt;
+
+---
+#### .emphasis[So what is blogdown?&lt;sup&gt;*&lt;/sup&gt;]
+
+- [R Markdown](https://rmarkdown.rstudio.com) &lt;img src="https://bookdown.org/yihui/rmarkdown/images/hex-rmarkdown.png" width="10%" align="right" /&gt;
+
+    - (relatively) simple syntax for writing documents
+    - the simpler, the more portable (multiple output formats)
+    - not only convenient (maintenance), but also reproducible
+    - most features of R Markdown _and_ [**bookdown**](https://bookdown.org) (technical writing)!!
+ 
+.footnote[
+[\*] From Yihui: https://slides.yihui.name/2017-rmarkdown-UNL-Yihui-Xie.html#35.
+]    
+--
+
+- [Hugo](https://gohugo.io) &lt;img src="https://gohugo.io/img/hugo.png" width="10%" align="right" /&gt;
+
+    - free, open-source, and easy to install (a single binary)
+    - lightning fast (generates one page in one millisecond)
+    - general-purpose (not only for blogs)
+
+
+---
+#### .emphasis[Why not WordPress, Tumblr, Medium.com, Blogger.com, etc?&lt;sup&gt;*&lt;/sup&gt;]
+
+- No R Markdown support (even maths support is often nonexistent or awkward)
+
+.footnote[
+[\*] From Yihui: https://slides.yihui.name/2017-rmarkdown-UNL-Yihui-Xie.html#36.
+]
+--
+
+- Huge benefits of static websites compared to dynamic websites
+    - all static files, no PHP or databases, no login/password, work anywhere (even offline)
+    
+    - typically fast to visit (no computation needed on the server side), and easy to speed up via CDN
+
+---
+class: inverse, center, middle
+
+# Let us start practising Elaine's Dance!!! 😃🎵🎶
+&lt;img src="images/Seinfeld/ElainDanceI.png" width="300px" style="display: block; margin: auto;" /&gt;
+
+---
+## Prep with GitHub
+
+The workshop will not go through [Happy Git with R](http://happygitwithr.com) to connect RStudio with your GitHub account.
+
+&lt;img 
+src="http://happygitwithr.com/img/watch-me-diff-watch-me-rebase-smaller.png" align="middle" img width="30%"  
+/&gt;
+
+We are going to assume that you are already familiar and have done:
+
+☑️ Chapter 5: [Register a GitHub account ](http://happygitwithr.com/github-acct.html)
+
+☑️ Chapter 6: [Install or upgrade R and RStudio ](http://happygitwithr.com/install-r-rstudio.html)
+
+---
+- Go to your GitHub account and create a new repository
+&lt;img src="images/GitHub/New_Repo.png" width="200px" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+- Give it a meaningful name 
+&lt;img src="images/GitHub/Create_New_Repo.png" width="300px" style="display: block; margin: auto;" /&gt;
+
+- Copy repo's **HTTPS** address
+&lt;img src="images/GitHub/HTTPS_GitHub.png" width="350px" style="display: block; margin: auto;" /&gt;
+
+---
+- Open a new project in RStudio: **File** ➡️ **New Project...**
+&lt;img src="images/GitHub/RS_New_Project.png" width="250px" style="display: block; margin: auto;" /&gt;
+- Select **Version Control** ➡️ **Git**
+&lt;img src="images/GitHub/Select_Version_Control.png" width="250px" style="display: block; margin: auto;" /&gt;
+
+- Paste the address of your Git repo  
+&lt;img src="images/GitHub/set_up_git_connection.png" width="250px" style="display: block; margin: auto;" /&gt;
+
+---
+## Install the packages
+
+Install &lt;span style="color:#EEAD0E"&gt;`blogdown`&lt;/span&gt;*&lt;/sup&gt;
+
+
+```r
+install.packages("blogdown")
+```
+
+Install &lt;span style="color:#EE1289"&gt;`Hugo`&lt;/span&gt; using blogdown
+
+```r
+blogdown::install_hugo()
+```
+
+If you already have those packages installed you can check to update your &lt;span style="color:#EE1289"&gt;`Hugo`&lt;/span&gt; package
+
+```r
+blogdown::hugo_version() # check version
+blogdown::update_hugo() # force an update
+```
+
+---
+## .shadow-text[If you **do need to**] .emphasis[upgrade or reinstall Hugo] 
+
+You may use 
+
+```r
+blogdown::update_hugo()
+```
+This is equivalent to 
+
+```r
+install_hugo(force = TRUE)
+```
+
+You can check the installed Hugo version via 
+
+
+```r
+blogdown::hugo_version()
+```
+
+and find the latest version of Hugo at &lt;https://github.com/gohugoio/hugo/releases&gt;.
+
+---
+class: inverse, center, middle
+# Let's build a website...
+
+&lt;img src="images/Seinfeld/Cosmo.jpg" width="250px" style="display: block; margin: auto;" /&gt;
+
+---
+#### Build a website
+
+We'll adopt a *simple is beautiful* approach and start building a website using a `default theme`*&lt;/sup&gt;.
+
+
+```r
+blogdown::new_site()
+```
+
+To use a different theme (for example: `hugo-academic`):
+
+
+```r
+blogdown::new_site(theme = "gcushen/hugo-academic", 
+                   theme_example = TRUE)
+```
+
+To see the current **Hugo themes** go to &lt;https://themes.gohugo.io/&gt;.
+
+
+---
+class: freight-slide, center, middle, inverse
+
+
+## .shadow-text[Let the knowledge and familiarity with `blogdown` and `Hugo` grow first.] 🧐 
+
+.emphasis[Once you get familiar with `blogdown` and `Hugo` you can always switch to a different theme. 
+
+💇
+
+https://bookdown.org/yihui/blogdown/other-themes.html]
+
+---
+
+## Structure of a HUGO site
+
+.pull-left[
+&lt;img src="images/blogdown/Site_Structure.png" width="325px" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+
+```r
+.
+|
+├── archetypes
+*├── config.toml
+├── content
+├── data
+├── layouts
+├── static 
+└── themes
+```
+]
+
+&lt;https://bookdown.org/yihui/blogdown/a-quick-example.html&gt;
+&lt;https://gohugo.io/getting-started/directory-structure/&gt;
+
+---
+## Serve site
+
+In console type:
+
+```r
+blogdown::serve_site()
+```
+.pull-left[
+or, from `Addins` menue select `Serve Site` 
+
+&lt;img src="images/blogdown/Serve_Site.png" width="300px" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+Don't try to view your site in your little RStudio viewer, instead click on &lt;span style="color:#00B2EE"&gt;`Show in new window`&lt;/span&gt;.
+
+&lt;img src="images/blogdown/show_in_new_window.png" width="300px" style="display: block; margin: auto;" /&gt;
+]
+
+---
+### Notation we will adopt: **Trailing slash**
+
+- **Trailing slash** will indicate a directory name, e.g. **`content/`** means we are referring to a directory called *content*, not to a file named *content*.
+
+
+```r
+.
+|
+├── archetypes
+*├── config.toml
+    ├── about.md
+    └── post
+├── content
+├── data
+├── layouts
+├── static 
+└── themes
+
+```
+
+---
+### Notation we will adopt: **Leading slash**
+
+- **Leading slash** will indicate the root directory of your *project website*, e.g. **`/content/about.md`** means we are referring to `about.md` file which is under the root directory of the website project.  
+
+
+```r
+.
+|
+├── archetypes
+*├── config.toml
+*   ├── about.md
+    └── post
+├── content
+├── data
+├── layouts
+├── static 
+└── themes
+
+```
+
+---
+class: inverse, center, middle
+# Let's edit our website...
+
+&lt;img 
+src=https://media.giphy.com/media/l0DEKov4X5Yee3cOI/giphy.gif align="middle" img width="60%"  
+/&gt;
+
+---
+class: inverse, center, middle
+#Step 1: logo 🛠⚙️💡
+&lt;img src="images/blogdown/logo_eRum2020.png" width="400px" /&gt;
+---
+###&lt;span style="color:#00B2EE"&gt;Step 1:&lt;/span&gt; add a logo
+
+The logo file belongs in the `/static/` directory:
+&gt; `/static/` stores all the static content for your future website: images, CSS, JavaScript, etc. When Hugo builds your site, all assets inside your static directory are copied over as-is.
+
+1. Move `01-images` folder to `/static/`
+2. Rename folder `images` (so now you have a `static/images/` folder with 2 .png files in it)
+3. Update &lt;span style="color:#EE2C2C"&gt;`config.toml`&lt;/span&gt; and save
+
+```r
+    [params.logo]
+*   url = "eRum2020.png"
+    width = 50
+    height = 50
+    alt = "Logo"
+```
+
+---
+###&lt;span style="color:#104E8B"&gt;Step 1:&lt;/span&gt; we've got a logo! 
+
+&lt;img src="images/blogdown/logo_page01.png" width="900px" style="display: block; margin: auto;" /&gt;
+
+---
+## .shadow-text[&lt;span style="color:#4A708B")&gt;Step 1:&lt;/span&gt; We've learnt] 🥁🎺😎
+
+`/themes/&lt;THEME&gt;/static/images/logo.png` 
+
+can be overwritten by 
+
+`/static/images/&lt;eRum2020.png&gt;`
+
+Note that this will only work with Hugo templates that have the 'standard' Hugo folder structure.💡
+
+---
+
+.pull-left[
+
+```r
+.
+├── static
+|    └── images
+*|        └── eRum2020.png
+└── themes
+    └── hugo-lithium
+        └── static
+            ├── css
+            ├── favicon.ico
+            ├── fonts
+            ├── images
+            │   └── hugo-logo.png
+            └── js
+```
+]
+
+.pull-right[
+
+```r
+.
+├── static
+|    └── images
+|        └── eRum2020.png
+└── themes
+    └── hugo-lithium
+        └── static
+            ├── css
+            ├── favicon.ico
+            ├── fonts
+            ├── images
+*           │   └── hugo-logo.png
+            └── js
+```
+]
+
+---
+
+class: inverse, center, middle
+#Step 2: about 🛠⚙️💡
+
+---
+###&lt;span style="color:#00B2EE"&gt;Step 2:&lt;/span&gt; update the *about* page
+
+1. Move `02-about.md` file to `/content/`
+
+2. Delete the existing file `about.md`
+
+3. Rename `02-about.md` → `about.md`
+---
+
+###&lt;span style="color:#104E8B"&gt;Step 2:&lt;/span&gt; we've got a logo! 
+
+&lt;img src="images/blogdown/about_page02.png" width="800px" style="display: block; margin: auto;" /&gt;
+---
+
+## .shadow-text[&lt;span style="color:#4A708B")&gt;Step 2:&lt;/span&gt; We've learnt] 🥁🎺😎
+
+&gt;All `content` for your website will live inside this directory. Each top-level folder in Hugo is considered a content section. For example, if your website has two main sections *posts* and *about* page, there will be a directory at `content/posts` and a file `content/about.md`.
+
+&lt;https://gohugo.io/getting-started/directory-structure/&gt;
+
+---
+
+```r
+.
+├── config.toml
+├── content
+*│   ├── about.md
+*│   └── post
+├── index.Rmd
+├── myblogdown
+├── public
+├── static
+└── themes
+```
+---
+class: inverse, center, middle
+#Step 3: emojis 🛠⚙️💡
+
+---
+###&lt;span style="color:#00B2EE"&gt;Step 3:&lt;/span&gt; enable the emojis 😁🤷🤦
+
+Note the amendments you need to do to the top of your `config.toml` file.  
+
+
+```r
+baseurl = "/"
+languageCode = "en-us"
+*title = "My awesome website"
+theme = "hugo-lithium"
+googleAnalytics = ""
+disqusShortname = ""
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+*enableEmoji = true
+```
+
+Save the change and check the *about* page... it should show a ❤️
+
+---
+## .shadow-text[&lt;span style="color:#4A708B")&gt;Step 3:&lt;/span&gt; We've learnt] 🥁🎺😎
+
+&gt; In your `config` file, you can direct Hugo as to how you want your website rendered, control your website’s menus, and arbitrarily define site-wide parameters specific to your project.
+
+&lt;https://gohugo.io/getting-started/configuration/&gt;
+
+---
+class: inverse, center, middle
+#Step 4: navigation bar 🛠⚙️💡
+
+---
+###&lt;span style="color:#00B2EE"&gt;Step 4:&lt;/span&gt; edit your navigation bar
+
+Make the changes to your `config.toml` file:
+
+
+```r
+[[menu.main]]
+    name = "About"
+    url = "/about/"
+*   weight = 1
+[[menu.main]]
+*   name = "Facebook"
+*   url = "https://www.facebook.com/EuropeanRUsersMeeting2020"
+*   weight = 2
+[[menu.main]]
+    name = "Twitter"
+*   url = "https://twitter.com/erum2020_conf"
+*   weight = 3
+```
+
+Save the changes, Serve Site and check the links.
+
+---
+## .shadow-text[&lt;span style="color:#4A708B")&gt;Step 4:&lt;/span&gt; We've learnt] 🥁🎺😎
+
+The `[[menu.main]]` in your `config` file enables you to edit and add navigation options.  
+
+&gt; A menu entry in a menu-template has specific variables and functions to make menu management easier.
+
+&lt;https://gohugo.io/variables/menus/&gt;
+
+---
+class: inverse, center, middle
+
+##Are we starting to feel confortable learning Elaine's moves?! 😃🎵🎶
+
+&lt;img src="images/Seinfeld/ElainDanceII.png" width="300px" /&gt;
+---
+class: inverse, center, middle
+#Step 5: css 🛠⚙️💡
+---
+###&lt;span style="color:#00B2EE"&gt;Step 5:&lt;/span&gt; customise the look 💅💄🎨
+
+1) In `/static/` create a new directory `css` and move `05-erum.css` file to `/static/css/`
+
+--
+.pull-left[
+2) Rename `05-erum.css` --&gt; `erum.css`
+
+```r
+.
+├── config.toml
+├── content
+├── public
+├── static
+│   ├── css
+*│   │   └── erum.css
+│   ├── images
+│   └── post
+└── themes
+```
+]
+
+.pull-right[
+3) In `config.toml`, add the highlighted line:
+
+
+```r
+[params]
+    description = "A website built through Hugo and blogdown."
+*   customCSS = ["css/erum.css"]
+```
+]
+---
+###&lt;span style="color:#104E8B"&gt;Step 5:&lt;/span&gt; we've got a look! 
+&lt;img src="images/blogdown/css_page05.png" width="750px" style="display: block; margin: auto;" /&gt;
+
+---
+## .shadow-text[&lt;span style="color:#4A708B")&gt;Step 5:&lt;/span&gt; We've learnt] 🥁🎺😎
+
+We have seen that 
+
+`/themes/&lt;THEME&gt;/static/css/main.css`
+
+could be overwritten by style rules present in:
+
+`/static/&lt;css/datateka.css&gt;`
+
+---
+
+
+```r
+.
+├── config.toml
+├── content
+├── index.Rmd
+├── myblogdown
+├── public
+*├── static
+*│   ├── css
+*│   │   └── erum.css
+│   ├── images
+│   └── post
+*└── themes
+*   └── hugo-lithium
+*       └── static
+*           └── css
+*		       └── main.css
+```
+---
+class: inverse, center, middle
+#Step 6: Font Awesome 🛠⚙️💡
+---
+###&lt;span style="color:#00B2EE"&gt;Step 6:&lt;/span&gt; use Font Awesome 
+
+&gt; Font Awesome is a font and icon toolkit based on CSS and LESS.
+
+&lt;https://en.wikipedia.org/wiki/Font_Awesome&gt;
+
+Go [here](https://fontawesome.com/v4.7.0/get-started/) to enter your email address and receive a Font Awesome embed code. We'll use the one you've downloaded with the workshop bundle for today's demo.
+
+To use them, you need 2 things:
+
+- the Font Awesome CSS file, and
+
+- a script that directs your site to where the fonts can be found (via Font Awesome's Content Delivery Network, or CDN)
+
+---
+###&lt;span style="color:#00B2EE"&gt;Step 6:&lt;/span&gt; use Font Awesome 
+
+1a) Move 06-font-awesome.min.css to `/static/css/`
+
+2a) Rename `06a-font-awesome.min.css` --&gt; `font-awesome.min.css`
+
+3b) Create a new directory `layouts/` and within it create a subdirectory called `partials`
+
+4b) Move other `06b-head_custom.html` and `06b-nav.html` to `/layouts/partials/` and renamed the files by removing `06b-` from their names.
+
+---
+
+```r
+.
+├── config.toml
+├── content
+├── index.Rmd
+*├── layouts
+*│   └── partials
+*│       ├── head_custom.html
+*│       └── nav.html
+├── myblogdown
+├── public
+*├── static
+*│   ├── css
+*│   │   └── fontawesome.min.css
+│   ├── images
+│   └── post
+└── themes
+
+```
+---
+###&lt;span style="color:#00B2EE"&gt;Step 6:&lt;/span&gt; Make changes to these sections in your `config.toml`:
+
+```r
+[[menu.main]]
+    name = "About"
+*   pre = ""
+    url = "/about/"
+    weight = 1
+[[menu.main]]
+    name = "Facebook"
+*   pre = "fa-facebook-square"
+    url = "https://www.facebook.com/EuropeanRUsersMeeting2020"
+    weight = 2
+[[menu.main]]
+    name = "Twitter"
+*   pre = "fa-twitter-square"
+    url = "https://twitter.com/erum2020_conf"
+    weight = 3
+```
+---
+###&lt;span style="color:#00B2EE"&gt;Step 6:&lt;/span&gt; Make changes to these sections in your `config.toml`:
+
+
+```r
+.
+.
+.
+
+[params]
+    description = "A website built through Hugo and blogdown."
+*   customCSS = ["css/erum.css", "css/font-awesome.min.css"]
+```
+
+---
+###&lt;span style="color:#104E8B"&gt;Step 6:&lt;/span&gt; look at our awesome font and icons! 
+
+&lt;img src="images/blogdown/overview_fontawsome06.png" width="700px" style="display: block; margin: auto;" /&gt;
+
+---
+## .shadow-text[&lt;span style="color:#4A708B")&gt;Step 6:&lt;/span&gt; We've learnt] 🥁🎺😎
+
+`/themes/&lt;THEME&gt;/layouts/partials/*&lt;PARTIALNAME&gt;.html`
+
+Could be overwritten by:
+
+`/layouts/partials/*&lt;PARTIALNAME&gt;.html`
+
+The `&lt;PARTIALNAME&gt;`s must match; unless you want to edit how the partials are called within your templates:
+
+  `{{ partial "&lt;PATH&gt;/&lt;PARTIAL&gt;.html" .  }}`
+  
+https://gohugo.io/templates/partials/
+
+---
+
+```r
+*├── layouts
+*│   └── partials
+*│       ├── head_custom.html
+*│       └── nav.html
+.
+*└── themes
+*   └── hugo-lithium
+*       └── layouts
+*           └── partials
+                ├── disqus.html
+                ├── footer.html
+                ├── footer_highlightjs.html
+                ├── footer_mathjax.html
+                ├── head.html
+*               ├── head_custom.html
+                ├── head_highlightjs.html
+                ├── header.html
+*               └── nav.html
+```
+---
+class: inverse, center, middle
+#Step 7: homepage 🛠⚙️💡
+---
+###&lt;span style="color:#00B2EE"&gt;Step 7:&lt;/span&gt; create a homepage 
+
+Where to move the file `07-index.html`?
+
+1) Move `07-index.html` to `/layouts/`&lt;sup&gt;*&lt;/sup&gt; 
+
+2) Rename `07-index.html` to `index.html`
+
+3) Edit the `config.toml` file
+
+
+```r
+[params]
+    description = "A website built through Hugo and blogdown. We can add any text we would like to appear on our home page. This is my first website design using blogdown in R at a workshop with Tanja. 😃 "
+    chapter = "Milan, June 2020"
+    customCSS = ["css/erum.css", "css/font-awesome.min.css"]
+```
+
+.footnote[
+[*] NOT to /layouts/partials/
+]
+---
+###&lt;span style="color:#104E8B"&gt;Step 7:&lt;/span&gt; look at our home page! 
+
+&lt;img src="images/blogdown/overview_homepage07.png" width="750px" style="display: block; margin: auto;" /&gt;
+---
+## .shadow-text[&lt;span style="color:#4A708B")&gt;Step 7:&lt;/span&gt; We've learnt] 🥁🎺😎
+
+Even when there is no `index.html` file here: `/themes/&lt;THEME&gt;/layouts/index.html`
+
+--
+We can make one that serves as the homepage here: `/layouts/index.html`
+
+
+```r
+.
+*├── layouts
+*│   ├── index.html
+*│   └── partials
+.
+*└── themes
+*   └── hugo-lithium
+*       └── layouts
+            ├── _default
+            └── partials
+```
+
+---
+## .shadow-text[&lt;span style="color:#4A708B")&gt;Step 7:&lt;/span&gt; We've learnt] 🥁🎺😎
+
+The filename `index.html` has special status in Hugo, and is **not** a partial layout template.
+
+You could also force a homepage by creating an `_index.md` file that lives at the root of your `/content/` folder (i.e., `/content/_index.md`)
+
+&lt;https://gohugo.io/templates/homepage/&gt;
+---
+class: inverse, center, middle
+#Step 8: posts 🛠⚙️💡
+---
+###&lt;span style="color:#00B2EE"&gt;Step 8:&lt;/span&gt; adding a post 
+
+Add a post section to your navigation bar by adding the highlighted lines to your `config.toml` file.  
+
+
+```r
+.
+.
+.
+[[menu.main]]
+    name = "Twitter"
+    pre = "fa-twitter-square"
+    url = "https://twitter.com/erum2020_conf"
+    weight = 3
+*[[menu.main]]
+*   name = "Posts"
+*   pre = "fa-bullhorn"
+*   url = "/post/"
+*   weight = 4
+```
+---
+###&lt;span style="color:#104E8B"&gt;Step 8:&lt;/span&gt; we've got a link for the posts!
+
+
+&lt;img src="images/blogdown/overview_post08.png" width="800px" style="display: block; margin: auto;" /&gt;
+
+---
+###&lt;span style="color:#00B2EE"&gt;Step 8:&lt;/span&gt; write a post ✍️
+Go to `Addins` and select `New Post` to which you are going to add the properties
+.pull-left[
+&lt;img src="images/blogdown/add_a_post.png" width="350px" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="images/blogdown/create_a_post.png" width="300px" style="display: block; margin: auto;" /&gt;
+]
+
+You can start writing your post as an R Markdown file 😊
+&lt;img src="images/blogdown/edit_write_post.png" width="300px" style="display: block; margin: auto;" /&gt;
+
+---
+###&lt;span style="color:#104E8B"&gt;Step 8:&lt;/span&gt; we've got our first posts!
+
+&lt;img src="images/blogdown/overview_post01.png" width="750px" style="display: block; margin: auto;" /&gt;
+
+---
+###&lt;span style="color:#00B2EE"&gt;Step 8:&lt;/span&gt; removing the `default` posts 🤷
+
+Click on the `Files` tab and navigate to the `/content/post/` directory to get the list of the *posts files*
+
+--
+
+Select the ones you don't want and click on `Delete` ❌. 
+
+&lt;img src="images/blogdown/delete_posts.png" width="250px" style="display: block; margin: auto;" /&gt;
+--
+
+`Serve Site` to have a look
+
+```r
+blogdown::serve_site()
+```
+
+---
+###&lt;span style="color:#104E8B"&gt;Step 8:&lt;/span&gt; look at your posts!
+
+&lt;img src="images/blogdown/overview_posts02.png" width="1000px" style="display: block; margin: auto;" /&gt;
+---
+## .shadow-text[&lt;span style="color:#4A708B")&gt;Step 8:&lt;/span&gt; We've learnt] 🥁🎺😎
+
+Adding a post is easy by selecting the option `New Post` from the `Addins` drop-down menu and writing it as a `.Rmd` file. This file will be automatically placed inside the `/content/posts/` directory: `/content/posts/2020-05-23-my-first-post.Rmd`
+
+
+```r
+.
+├── config.toml
+*├── content
+*│   └── post
+*│       ├── 2020-05-23-my-first-post.Rmd
+*│       └── 2020-05-23-my-first-post.html
+├── data
+├── layouts
+├── static 
+└── themes
+
+```
+
+---
+class: inverse, center, middle
+
+##Let's do Elaine's Dance!!! 😃🎵🎶
+
+&lt;img 
+src=https://media.giphy.com/media/13Y6LAZJqRspI4/giphy.gif align="middle" img width="60%" /&gt;
+
+---
+
+class: inverse, center, middle
+
+# Deploy your website 🧞
+
+---
+### Deployment
+
+Click on the `Git` tab and select all of the files to `commit`
+
+&lt;img src="images/GitHub/git_commit.png" width="350px" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="images/GitHub/first_commit.png" width="600px" style="display: block; margin: auto;" /&gt;
+---
+Click to `push`
+
+&lt;img src="images/GitHub/git_push.png" width="700px" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="images/GitHub/git_push01.png" width="500px" style="display: block; margin: auto;" /&gt;
+
+---
+### Check your Git Repo
+
+&lt;img src="images/GitHub/git_repo.png" width="700px" style="display: block; margin: auto;" /&gt;
+---
+class: inverse, center, middle
+
+###Congratulations! You are one step away from getting your website up and running!!!! 👍😃
+
+&lt;img 
+src=https://media.giphy.com/media/1ZkMDj88mQ1rO/giphy.gif align="middle" img width="45%" /&gt;
+---
+### Have you heard about [Netlify](https://www.netlify.com/)?
+
+&lt;img src="images/Netlify/yuhui_xie.png" width="250px" style="display: block; margin: auto;" /&gt;
+
+&gt; Consider Netlify instead of GitHub Pages for Your Static Websites.
+
+&gt; Do not use Github pages or the *.github.io subdomain. Use Netlify instead. Netlify is the new and much better Github pages.
+
+*Yihui Xie*
+
+&lt;https://yihui.name/en/2017/06/netlify-instead-of-github-pages/&gt;
+---
+
+&lt;img src="images/Netlify/deploy_in_netlify.png" width="700px" style="display: block; margin: auto;" /&gt;
+
+&gt; Deploying in Netlify through GitHub is smooth.
+
+&gt; When you are ready to deploy, commit your changes and push to [GitHub](https://github.com), then go online to [Netlify](https://www.netlify.com/).
+
+*Alison Presmanes Hill*
+
+&lt;https://alison.rbind.io/post/up-and-running-with-blogdown/&gt;
+---
+Go to [Netlify](https://www.netlify.com/) and open an account (the easiest way is to use your [GitHub](https://github.com) login).
+
+Click on *New site from Git* button
+
+&lt;img src="images/Netlify/new_site_from_git.png" width="300px" style="display: block; margin: auto;" /&gt;
+
+Select *GitHub* option to *Continue Deployment*
+&lt;img src="images/Netlify/new_site_from_git1.png" width="300px" style="display: block; margin: auto;" /&gt;
+
+*Select the repository* with the website
+&lt;img src="images/Netlify/new_site_from_git2.png" width="300px" style="display: block; margin: auto;" /&gt;
+
+---
+Select your site repo and klick on *Deploy site* button at the bottom of the page.
+
+&lt;img src="images/Netlify/deploy_site.png" width="500px" style="display: block; margin: auto;" /&gt;
+---
+Deployment might take a few seconds...
+
+&lt;img src="images/Netlify/wait_deployment.png" width="500px" style="display: block; margin: auto;" /&gt;
+
+Go into *Site Settings* and click on *Change site name*. 
+
+&lt;img src="images/Netlify/change_site_name.png" width="500px" style="display: block; margin: auto;" /&gt;
+
+---
+Change the name...
+
+&lt;img src="images/Netlify/change_name1.png" width="400px" style="display: block; margin: auto;" /&gt;
+
+I'll call it **`myawesomewebsite`**
+
+&lt;img src="images/Netlify/change_name1.1.png" width="450px" style="display: block; margin: auto;" /&gt;
+
+---
+This is it...
+
+&lt;img src="images/Netlify/change_name2.png" width="650px" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="images/Netlify/myawesomewebsite.png" width="650px" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="images/Netlify/website_live.png" width="900px" style="display: block; margin: auto;" /&gt;
+---
+
+A few more things... 🤔
+
+## Final edit of your config.toml: update `baseurl`
+
+At the top of the config.toml insert the name of your website
+
+
+```r
+*baseurl = "https://erum2020tk.netlify.app/"
+languageCode = "en-us"
+title = "My awesome website"
+theme = "hugo-lithium"
+googleAnalytics = ""
+disqusShortname = ""
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+enableEmoji = true
+```
+---
+### You can host your site as `rbind` subdomain 
+&lt;img src="images/rbind/RBind.png" width="10%" align="left" /&gt;
+[rbind](https://github.com/rbind) - Bind all websites in the `R` and `stats` community. 
+    
+
+&lt;https://covid19sr.rbind.io/&gt; is an example of what to request if you wish to move your site to [rbind](https://github.com/rbind).    
+&lt;img src="images/RBind/rbind_support.png" width="500px" style="display: block; margin: auto;" /&gt;
+
+&lt;https://support.rbind.io/about/&gt;
+---
+
+### Some useful links
+
+[RStudio: Making websites with Markdown](https://www.rstudio.com/resources/webinars/introducing-blogdown/)
+
+A tutorial on using `blogdown`.
+
+--
+
+&lt;https://blogdown-demo.netlify.com&gt; GitHub: &lt;https://github.com/apreshill/blogdown-demo&gt;
+
+A minimal website example using the blogdown site by [Alison Presmanes Hill](https://alison.rbind.io).
+
+--
+[Up and running with blogdown](https://alison.rbind.io/post/up-and-running-with-blogdown/#build-your-site-in-rstudio)
+
+[Alison's](https://amber.rbind.io/) well structured and easy to follow tutorial higlighting the key steps when building a website using blogdown.
+
+--
+
+[`blogdown`: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/) 
+
+by [Yihui Xie](https://yihui.name/), [Amber Thomas](https://amber.rbind.io/), [Alison Presmanes Hill](https://alison.rbind.io)
+---
+
+
+class: inverse, center, middle
+##Do the Cosmo Dance?! 🤪🎵🎶
+
+&lt;img 
+src=https://i.gifer.com/B7OF.gif align="middle" img width="50%"  
+/&gt;
+
+
+---
+class: inverse, center, middle
+
+##Thanks!
+
+To Yihui and RStudio for the blogdown package
+
+To the rbind group for support
+
+Special thanks to Alison for sharing her knowledge and making her material reproducible and freely available. This workshop has been created with Alison's support and it is based on her 'up and running with blogdown tutorial' available at &lt;https://github.com/apreshill/blogdown-workshop&gt;
+
+[https://sisteranalyst.org](https://sisteranalyst.org) 
+
+@SISTERANALYST 
+
+[tanjakec.github.io](tanjakec.github.io)
+
+@Tatjana_Kec
+
+
+Slides created via the `R` package [**xaringan**](https://github.com/yihui/xaringan).
+
+The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
+---
+https://alison.rbind.io/categories/netlify/
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "solarized-light",
+"highlightLanguage": ["r", "css", "yaml"],
+"slideNumberFormat": "",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
