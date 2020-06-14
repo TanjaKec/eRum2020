@@ -123,20 +123,16 @@ class: freight-slide, center, middle, inverse
 
 ---
 class: inverse, middle
-.emphasis[Go to <https://github.com/TatjanaKec/eRum2020_WS> to download the material.]
+.emphasis[Go to <https://github.com/TanjaKec/eRum2020> to download the material.]
 
-```{r, out.width = "550px", fig.align = 'center', echo=FALSE}
+```{r, out.width = "800px", fig.align = 'center', echo=FALSE}
 knitr::include_graphics("images/materijal/GitHub_link1.png")
-```
-
-```{r, out.width = "550px", fig.align = 'center', echo=FALSE}
-knitr::include_graphics("images/materijal/GitHub_link2.png")
 ```
 
 ---
 class: inverse, center, middle
 
-# .emphasis[Get Started] 🤫😴
+# .emphasis[Get Started] 🤫😴💤
 
 <img 
 src=https://media.giphy.com/media/mMSE6MfkXzLLa/giphy.gif align="middle" img width="60%" />
@@ -157,9 +153,9 @@ knitr::include_graphics("images/rmd_hugo_blogdown.png")
 - [R Markdown](https://rmarkdown.rstudio.com) <img src="https://bookdown.org/yihui/rmarkdown/images/hex-rmarkdown.png" width="10%" align="right" />
 
     - (relatively) simple syntax for writing documents
-    - the simpler, the more portable (multiple output formats)
+    - simpler and more portable plus it allowes fo multiple output formats
     - not only convenient (maintenance), but also reproducible
-    - most features of R Markdown _and_ [**bookdown**](https://bookdown.org) (technical writing)!!
+    - contains most features of R Markdown _and_ [**bookdown**](https://bookdown.org) (technical writing)!!
  
 .footnote[
 [\*] From Yihui: https://slides.yihui.name/2017-rmarkdown-UNL-Yihui-Xie.html#35.
@@ -355,7 +351,7 @@ In console type:
 blogdown::serve_site()
 ```
 .pull-left[
-or, from `Addins` menue select `Serve Site` 
+or, from `Addins` menu select `Serve Site` 
 
 ```{r, out.width = "300px", fig.align = 'center', echo=FALSE}
 knitr::include_graphics("images/blogdown/Serve_Site.png")
@@ -363,7 +359,7 @@ knitr::include_graphics("images/blogdown/Serve_Site.png")
 ]
 
 .pull-right[
-Don't try to view your site in your little RStudio viewer, instead click on <span style="color:#00B2EE">`Show in new window`</span>.
+Don't try to view your site in your small RStudio viewer, instead click on <span style="color:#00B2EE">`Show in new window`</span>.
 
 ```{r, out.width = "300px", fig.align = 'center', echo=FALSE}
 knitr::include_graphics("images/blogdown/show_in_new_window.png")
@@ -1129,6 +1125,28 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 enableEmoji = true
 ```
 ---
+### Add the netlify.toml File
+
+Make the `netlify.toml` file as plain text in the root of your blogdown project directory.
+
+```
+[build] 
+  publish = "public"
+  command = "hugo"
+
+[context.production.environment]
+  HUGO_VERSION = "0.69.2" # if older, use format: 0.69.2 (no trailing zero)
+  HUGO_ENV = "production"
+  HUGO_ENABLEGITINFO = "true"
+  
+[context.branch-deploy.environment]
+  HUGO_VERSION = "0.69.2" # if older, use format: 0.69.2 (no trailing zero)
+
+[context.deploy-preview.environment]
+  HUGO_VERSION = "0.69.2"
+```
+
+---
 ### You can host your site as `rbind` subdomain 
 <img src="images/rbind/RBind.png" width="10%" align="left" />
 [rbind](https://github.com/rbind) - Bind all websites in the `R` and `stats` community. 
@@ -1144,26 +1162,22 @@ knitr::include_graphics("images/RBind/rbind_support.png")
 
 ### Some useful links
 
-[RStudio: Making websites with Markdown](https://www.rstudio.com/resources/webinars/introducing-blogdown/)
-
-A tutorial on using `blogdown`.
-
---
-
-<https://blogdown-demo.netlify.com> GitHub: <https://github.com/apreshill/blogdown-demo>
-
-A minimal website example using the blogdown site by [Alison Presmanes Hill](https://alison.rbind.io).
-
---
-[Up and running with blogdown](https://alison.rbind.io/post/up-and-running-with-blogdown/#build-your-site-in-rstudio)
-
-[Alison's](https://amber.rbind.io/) well structured and easy to follow tutorial higlighting the key steps when building a website using blogdown.
+- Book: [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/)
+by [Yihui Xie](https://yihui.org/en/), [Amber Thomas](https://amber.rbind.io), [Alison Presmanes Hill](https://alison.rbind.io)
 
 --
 
-[`blogdown`: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/) 
+- <https://blogdown-demo.netlify.com> GitHub: <https://github.com/apreshill/blogdown-demo>
+A minimal website example using the blogdown site by [Alison Presmanes Hill](https://alison.rbind.io):
 
-by [Yihui Xie](https://yihui.name/), [Amber Thomas](https://amber.rbind.io/), [Alison Presmanes Hill](https://alison.rbind.io)
+- [Up and running with blogdown](https://alison.rbind.io/post/up-and-running-with-blogdown/#build-your-site-in-rstudio). [Alison's](https://alison.rbind.io/) well structured and easy to follow tutorial higlighting the key steps when building a website using the `blogdown` package.
+
+- In the post [A Spoonful of Hugo: The netlify.toml File](https://alison.rbind.io/post/2019-02-19-hugo-netlify-toml/) [Alison](https://alison.rbind.io/) points out that package version mismatches are the leading cause of build failure with Netlify.
+
+--
+
+- [Blogdown & Hugo - R Markdown - RStudio Community](https://community.rstudio.com/t/blogdown-hugo/)
+
 ---
 
 
@@ -1198,5 +1212,4 @@ Special thanks to Alison for sharing her knowledge and making her material repro
 Slides created via the `R` package [**xaringan**](https://github.com/yihui/xaringan).
 
 The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
----
-https://alison.rbind.io/categories/netlify/
+
