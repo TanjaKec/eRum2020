@@ -655,7 +655,7 @@ We have seen that
 
 could be overwritten by style rules present in:
 
-`/static/<css/datateka.css>`
+`/static/<css/erum.css>`
 
 ---
 
